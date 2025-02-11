@@ -36,7 +36,8 @@ void borda(bool rect_estado)
     else
     {
         ssd1306_fill(&ssd, false);
-        ssd1306_rect(&ssd, 3, 3, 124, 60, cor, !cor); // Desenha um retângulo
+        ssd1306_rect(&ssd, 3, 3, 122, 58, cor, !cor); // Desenha um retângulo
+        ssd1306_rect(&ssd, 1, 1, 126, 62, cor, !cor); // Desenha um retângulo
         ssd1306_send_data(&ssd);                      // Atualiza o display
     }
 }

@@ -15,10 +15,14 @@ void joystick_init()
     gpio_pull_up(JOYSTICK_PB);
 }
 
-void button_init(){
+void ledg_button_init(){
+
     gpio_init(BUTTON_A);
     gpio_set_dir(BUTTON_A, GPIO_IN);
     gpio_pull_up(BUTTON_A);
+
+    gpio_init(VERDE);
+    gpio_set_dir(VERDE, GPIO_OUT);
 }
 
 void init()
@@ -26,5 +30,5 @@ void init()
     stdio_init_all();
     initI2C();
     joystick_init();
-    button_init();
+    ledg_button_init();
 }
