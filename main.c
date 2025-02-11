@@ -6,6 +6,9 @@
 int main()
 {
     stdio_init_all();
+    initI2C();
+
+    display(10,20);
 
     while (true) {
         printf("Hello, world!\n");
