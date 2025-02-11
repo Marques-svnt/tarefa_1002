@@ -1,9 +1,8 @@
 #include "ssd1306.h"
 
 // Valor hexadecimal para o desenho do quadrado
-
 static uint8_t square[] = {
-  0x00,0x7e,0x7e,0x7e,0x7e,0x7e,0x7e,0x00, // Quadrado
+    0x00, 0x7e, 0x7e, 0x7e, 0x7e, 0x7e, 0x7e, 0x00, // Quadrado
 };
 
 void ssd1306_init(ssd1306_t *ssd, uint8_t width, uint8_t height, bool external_vcc, uint8_t address, i2c_inst_t *i2c)
@@ -179,9 +178,9 @@ void ssd1306_draw_char(ssd1306_t *ssd, char c, uint8_t x, uint8_t y)
 {
   uint16_t index = 0;
   char ver = c;
-  if (c == 'A')
+  if (c == 'A') // Usamos o 'A' para representar o quadrado
   {
-    index = (0) * 8; // Para letras maiúsculas
+    index = (0) * 8; // Posição do quadrado na lista
   }
   for (uint8_t i = 0; i < 8; ++i)
   {

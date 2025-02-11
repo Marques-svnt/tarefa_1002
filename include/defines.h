@@ -7,5 +7,15 @@
 #define I2C_SCL 15
 #define endereco 0x3C
 
+// Definir os pinos dos leds RGB
+#define VERDE 11
+#define AZUL 12
+#define VERMELHO 13
+
+// Definições do joystick
+
+#define JOYSTICK_X_PIN 26
+#define JOYSTICK_Y_PIN 27
+#define JOYSTICK_PB 22
 
 #endif
