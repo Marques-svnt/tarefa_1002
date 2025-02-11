@@ -5,16 +5,6 @@
 #include "display.h"
 #include "defines.h"
 
-void led_init()
-{
-    gpio_init(VERMELHO);
-    gpio_init(AZUL);
-    gpio_init(VERDE);
-    gpio_set_dir(VERMELHO, GPIO_OUT);
-    gpio_set_dir(AZUL, GPIO_OUT);
-    gpio_set_dir(VERDE, GPIO_OUT);
-}
-
 void joystick_init()
 {
     adc_init();
@@ -29,6 +19,5 @@ void init()
 {
     stdio_init_all();
     initI2C();
-    led_init();
     joystick_init();
 }
