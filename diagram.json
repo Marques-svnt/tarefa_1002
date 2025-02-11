@@ -59,6 +59,13 @@
       "top": 233.54,
       "left": -470.17,
       "attrs": { "i2cAddress": "0x3c" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": -41.8,
+      "left": -470.4,
+      "attrs": { "color": "green" }
     }
   ],
   "connections": [
@@ -80,7 +87,9 @@
     [ "pico:GND.3", "led2:C", "black", [ "h0" ] ],
     [ "oled1:SDA", "pico:GP14", "blue", [ "v-86.4", "h0.07" ] ],
     [ "oled1:SCL", "pico:GP15", "green", [ "v-76.8", "h0.3" ] ],
-    [ "oled1:GND", "pico:GND.4", "black", [ "v-96" ] ]
+    [ "oled1:GND", "pico:GND.4", "black", [ "v-96" ] ],
+    [ "pico:GP5", "btn1:2.r", "green", [ "h-48", "v-48" ] ],
+    [ "pico:GND.1", "btn1:1.r", "black", [ "h-28.8", "v-28.8" ] ]
   ],
   "dependencies": {}
 }
