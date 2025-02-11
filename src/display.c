@@ -2,7 +2,7 @@
 #include "pico/stdlib.h"
 #include "hardware/i2c.h"
 #include "ssd1306.h"
-#include "display.h"
+#include "defines.h"
 
 bool cor = true;
 ssd1306_t ssd;

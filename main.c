@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
+#include "display.h"
+#include "init.h"
 
 
 
 int main()
 {
-    stdio_init_all();
-    initI2C();
+    // Função que chama todas as inicializações do projeto
+    init();
 
-    display(10,20);
+    display(60,28); // Quadrado centralizado no display
 
     while (true) {
         printf("Hello, world!\n");
