@@ -2,6 +2,7 @@
 #include "pico/stdlib.h"
 #include "defines.h"
 #include "display.h"
+#include "pwm.h"
 
 // Variáveis globais
 static volatile uint a = 1;
@@ -48,7 +49,8 @@ void gpio_irq_handler(uint gpio, uint32_t events)
         j++;
         rect_estado = !rect_estado; // Muda o estado do retângulo para alterar o estilo
 
-        estado_verde = !estado_verde;
+        // Liga ou desliga o led verde
+        estado_verde = !estado_verde; 
         gpio_put(VERDE, estado_verde);
 
         if(estado_verde == true){

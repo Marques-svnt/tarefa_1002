@@ -9,6 +9,9 @@
 
 extern bool led_estado;
 
+uint16_t lastvrx_value = 2048;
+uint16_t lastvry_value = 2048;
+
 uint pwm_init_gpio(uint gpio, uint wrap)
 {
     gpio_set_function(gpio, GPIO_FUNC_PWM);
@@ -93,38 +96,48 @@ void movimento()
     sleep_us(5); // Pequeno delay para estabilidade
     uint16_t vry_value = adc_read();
 
-    int coord_x = (vry_value * 126) / 4095; // Mapeando para intervalo de 0-127
-    int coord_y = (vrx_value * 40) / 4095;  // Mapeando para intervalo de 0-63
+    // Variável que faz o controle para que haja atualização apenas quando o joystick se mover evitando que ele fique tremendo o tempo todo
+    int flick_x = vrx_value - lastvrx_value;
+    int flick_y = vry_value - lastvry_value;
 
-    // Definir limites para coordenadas
-    int min_x = 10, max_x = 112;
-    int min_y = 10, max_y = 48;
-
-    // Inversão do eixo Y devido ao display exibir os movimentos ao contrário
-    coord_y = max_y - coord_y;
-
-    // Garantir que as coordenadas fiquem dentro dos limites
-    if (coord_x < min_x)
+    if (!(flick_x < 100 && flick_x > -100 && flick_y < 100 && flick_y > -100)) // Apenas ocorre o código quando o valor de flick fugir do intervalo entre -100 e 100
     {
-        coord_x = min_x;
-    }
-    if (coord_x > max_x)
-    {
-        coord_x = max_x;
-    }
-    if (coord_y < min_y)
-    {
-        coord_y = min_y;
-    }
-    if (coord_y > max_y)
-    {
-        coord_y = max_y;
-    }
+        int coord_x = (vry_value * 126) / 4095; // Mapeando para intervalo de 0-127
+        int coord_y = (vrx_value * 40) / 4095;  // Mapeando para intervalo de 0-63
 
-    // Exibir as coordenadas
-    // printf("X: %d, Y: %d\n", coord_x, coord_y); // Debug
-    display(coord_x, coord_y);
+        lastvry_value = vry_value;
+        lastvrx_value = vrx_value;
 
-    // Delay de estabilização
-    sleep_us(5);
+        // Definir limites para coordenadas
+        int min_x = 10, max_x = 112;
+        int min_y = 10, max_y = 48;
+
+        // Inversão do eixo Y devido ao display exibir os movimentos ao contrário
+        coord_y = max_y - coord_y;
+
+        // Garantir que as coordenadas fiquem dentro dos limites
+        if (coord_x < min_x)
+        {
+            coord_x = min_x;
+        }
+        if (coord_x > max_x)
+        {
+            coord_x = max_x;
+        }
+        if (coord_y < min_y)
+        {
+            coord_y = min_y;
+        }
+        if (coord_y > max_y)
+        {
+            coord_y = max_y;
+        }
+
+        // Exibir as coordenadas
+        // printf("X: %d, Y: %d\n", coord_x, coord_y); // Debug
+        display(coord_x, coord_y);
+
+        // Delay de estabilização
+        sleep_us(5);
+    }
 }
