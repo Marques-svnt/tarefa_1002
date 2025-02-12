@@ -86,7 +86,7 @@ void leds_pwm()
     }
 }
 
-void movimento()
+void movimentoJoystick()
 {
     // Mapeando valores do ADC para o display
     adc_select_input(0);
