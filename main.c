@@ -4,6 +4,7 @@
 #include "display.h"
 #include "init.h"
 #include "interrupt.h"
+#include "pwm_leds.h"
 
 int main()
 {
@@ -15,6 +16,7 @@ int main()
     gpio_set_irq_enabled_with_callback(JOYSTICK_PB, GPIO_IRQ_EDGE_FALL, true, &gpio_irq_handler);
     while (true)
     {
-        sleep_ms(1000);
+        leds_pwm();
+        sleep_ms(10);
     }
 }

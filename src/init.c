@@ -3,6 +3,7 @@
 #include "hardware/adc.h"
 #include "hardware/pwm.h"
 #include "display.h"
+#include "pwm_leds.h"
 #include "defines.h"
 
 void joystick_init()
@@ -31,4 +32,5 @@ void init()
     initI2C();
     joystick_init();
     ledg_button_init();
+    pwm_slice_init();
 }

@@ -34,10 +34,11 @@ void gpio_irq_handler(uint gpio, uint32_t events)
         printf("Botão A pressionado: %d vezes\n", a); // Para controle quando se usa o monitor serial para verificar se há bouncing
         a++;
         led_estado = !led_estado;
+        
         if (led_estado == true){
-            printf("Ligando os leds\n");
+            printf("Ligando os leds PWM\n");
         } else {
-            printf("Desligando os leds\n");
+            printf("Desligando os leds PWM\n");
         }
 
     } else if (gpio == JOYSTICK_PB && debounce(&last_time_J, 200000))
@@ -50,6 +51,7 @@ void gpio_irq_handler(uint gpio, uint32_t events)
 
         estado_verde = !estado_verde;
         gpio_put(VERDE, estado_verde);
+
         if(estado_verde == true){
             printf(" e ligando o led verde\n");
         } else {
