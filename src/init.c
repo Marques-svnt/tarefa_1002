@@ -3,7 +3,7 @@
 #include "hardware/adc.h"
 #include "hardware/pwm.h"
 #include "display.h"
-#include "pwm_leds.h"
+#include "pwm.h"
 #include "defines.h"
 
 void joystick_init()

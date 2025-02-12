@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "defines.h"
+#include "hardware/adc.h"
+#include "hardware/pwm.h"
 #include "display.h"
 #include "init.h"
 #include "interrupt.h"
-#include "pwm_leds.h"
+#include "pwm.h"
 
 int main()
 {
+   
     // Função que chama todas as inicializações do projeto
     init();
     borda(true);

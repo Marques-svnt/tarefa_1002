@@ -2,7 +2,7 @@
 
 // Valor hexadecimal para o desenho do quadrado
 static uint8_t square[] = {
-    0x00, 0x7e, 0x7e, 0x7e, 0x7e, 0x7e, 0x7e, 0x00, // Quadrado
+    0x7e, 0x7e, 0x7e, 0x7e, 0x7e, 0x7e, 0x7e, 0x7e, // Quadrado
 };
 
 void ssd1306_init(ssd1306_t *ssd, uint8_t width, uint8_t height, bool external_vcc, uint8_t address, i2c_inst_t *i2c)
