@@ -2,6 +2,7 @@
 #include "pico/stdlib.h"
 #include "hardware/adc.h"
 #include "hardware/pwm.h"
+#include "display.h"
 #include "defines.h"
 #include "interrupt.h"
 #include "init.h"
@@ -32,6 +33,7 @@ void leds_pwm()
 
     if (led_estado)
     {
+        // Configura o input do ADC
         adc_select_input(0);
         sleep_us(5); // Pequeno delay para estabilidade
         uint16_t vrx_value = adc_read();
@@ -39,39 +41,90 @@ void leds_pwm()
         sleep_us(5); // Pequeno delay para estabilidade
         uint16_t vry_value = adc_read();
 
-        printf("VRX: %u, VRY: %u\n", vrx_value, vry_value);
+        // printf("VRX: %u  VRY: %u\n",vrx_value,vry_value); // Debug
 
-        if (vrx_value >= 1500 && vrx_value <= 2500) 
+        // Cálculos para ligar os leds e configurar a frequência da intensidade
+        int i = vrx_value - 2048;
+        int j = vry_value - 2048;
+        int range = 500;
+
+        // Vê em qual intervalo o joystick se encontra para decidir o estado
+        if (i > range) // Range de 2500 até 4095
+        {
+            pwm_set_gpio_level(VERMELHO, 2 * (vrx_value - 2048));
+        }
+        else if (i < -range) // Range de 0 até 1500
+        {
+            pwm_set_gpio_level(VERMELHO, 2 * (-vrx_value + 2048));
+        }
+        else // Range de 1500 até 2500 (definir o led desligado mesmo com variação de hardware do joystick)
         {
             pwm_set_gpio_level(VERMELHO, 0);
         }
-        else if (vrx_value > 2500) 
-        {
-            pwm_set_gpio_level(VERMELHO, vrx_value);
-        }
-        else if (vrx_value < 1500)
-        {
-            int i = 4095 - vrx_value;
-            pwm_set_gpio_level(VERMELHO, (vrx_value + i));
-        }
 
-        if (vry_value >= 1500 && vry_value <= 2500) 
+        if (j > range) // Range de 2500 até 4095
+        {
+            pwm_set_gpio_level(AZUL, 2 * (vry_value - 2048));
+        }
+        else if (j < -range) // Range de 0 até 1500
+        {
+            pwm_set_gpio_level(AZUL, 2 * (-vry_value + 2048));
+        }
+        else // Range de 1500 até 2500 (definir o led desligado mesmo com variação de hardware do joystick)
         {
             pwm_set_gpio_level(AZUL, 0);
         }
-        else if (vry_value > 2500) 
-        {
-            pwm_set_gpio_level(AZUL, vry_value);
-        }
-        else if (vry_value < 1500)
-        {
-            int j = 4095 - vry_value;
-            pwm_set_gpio_level(AZUL, (vry_value + j));
-        }
     }
+    // Não liga nada se o botão do joystick estiver dando o retorno falso
     else
     {
         pwm_set_gpio_level(VERMELHO, 0);
         pwm_set_gpio_level(AZUL, 0);
     }
+}
+
+void movimento()
+{
+    // Mapeando valores do ADC para o display
+    adc_select_input(0);
+    sleep_us(5); // Pequeno delay para estabilidade
+    uint16_t vrx_value = adc_read();
+    adc_select_input(1);
+    sleep_us(5); // Pequeno delay para estabilidade
+    uint16_t vry_value = adc_read();
+
+    int coord_x = (vry_value * 126) / 4095; // Mapeando para intervalo de 0-127
+    int coord_y = (vrx_value * 40) / 4095;  // Mapeando para intervalo de 0-63
+
+    // Definir limites para coordenadas
+    int min_x = 10, max_x = 112;
+    int min_y = 10, max_y = 48;
+
+    // Inversão do eixo Y devido ao display exibir os movimentos ao contrário
+    coord_y = max_y - coord_y;
+
+    // Garantir que as coordenadas fiquem dentro dos limites
+    if (coord_x < min_x)
+    {
+        coord_x = min_x;
+    }
+    if (coord_x > max_x)
+    {
+        coord_x = max_x;
+    }
+    if (coord_y < min_y)
+    {
+        coord_y = min_y;
+    }
+    if (coord_y > max_y)
+    {
+        coord_y = max_y;
+    }
+
+    // Exibir as coordenadas
+    // printf("X: %d, Y: %d\n", coord_x, coord_y); // Debug
+    display(coord_x, coord_y);
+
+    // Delay de estabilização
+    sleep_us(5);
 }

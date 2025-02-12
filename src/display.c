@@ -7,6 +7,8 @@
 bool cor = true;
 ssd1306_t ssd;
 
+extern bool rect_estado;
+
 void initI2C()
 {
     // Inicializa o I2C e configura como 400kHz
@@ -25,6 +27,7 @@ void initI2C()
     ssd1306_send_data(&ssd);
 }
 
+// Faz o desenho do retângulo e muda o estilo dependendo do parâmetro do joystick
 void borda(bool rect_estado)
 {
     if (rect_estado == true)
@@ -42,16 +45,12 @@ void borda(bool rect_estado)
     }
 }
 
-// Função que recebe o texto e coordenadas para exibir no display a mensagem
+// Função que recebe as coordenadas para exibir no display o quadrado
 void display(int x, int y)
 {
-    // Atualiza o conteúdo do display com animações
-    ssd1306_draw_string(&ssd, "A", x, y);         // Desenha a string passada como argumento
+    // Atualiza o conteúdo do display
+    ssd1306_fill(&ssd, false);                    // Limpa a tela
+    borda(rect_estado);                           // Desenha o retângulo
+    ssd1306_draw_string(&ssd, "A", x, y);         // Desenha o quadrado
     ssd1306_send_data(&ssd);                      // Atualiza o display
-}
-
-// Limpa o display
-void display_limpa()
-{
-    ssd1306_fill(&ssd, false);
 }

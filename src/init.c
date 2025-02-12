@@ -6,16 +6,20 @@
 #include "pwm.h"
 #include "defines.h"
 
+// Inicializa o joystick
 void joystick_init()
 {
+    // Configura o ADC do joystick e o estado do botão
     adc_init();
     adc_gpio_init(JOYSTICK_X_PIN);
     adc_gpio_init(JOYSTICK_Y_PIN);
+
     gpio_init(JOYSTICK_PB);
     gpio_set_dir(JOYSTICK_PB, GPIO_IN);
     gpio_pull_up(JOYSTICK_PB);
 }
 
+// Configura o botão A e o led verde
 void ledg_button_init(){
 
     gpio_init(BUTTON_A);
@@ -26,6 +30,7 @@ void ledg_button_init(){
     gpio_set_dir(VERDE, GPIO_OUT);
 }
 
+// Faz todas as inicializações do projeto
 void init()
 {
     stdio_init_all();

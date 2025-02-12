@@ -27,7 +27,7 @@ void gpio_irq_handler(uint gpio, uint32_t events)
 {
     uint32_t current_time = to_us_since_boot(get_absolute_time());
 
-    // Desligar ou ligar os leds de ligarem ao mexer o joystick
+    // Desligar ou ligar os leds de ligarem ao apertar o joystick
     if (gpio == BUTTON_A && debounce(&last_time_A, 200000))
     {
         last_time_A = current_time;
@@ -46,8 +46,7 @@ void gpio_irq_handler(uint gpio, uint32_t events)
         last_time_J = current_time;
         printf("Joystick pressionado: %d vezes\nAlterando a borda do retângulo", j); // Para controle quando se usa o monitor serial para verificar se há bouncing
         j++;
-        rect_estado = !rect_estado;
-        borda(rect_estado);
+        rect_estado = !rect_estado; // Muda o estado do retângulo para alterar o estilo
 
         estado_verde = !estado_verde;
         gpio_put(VERDE, estado_verde);

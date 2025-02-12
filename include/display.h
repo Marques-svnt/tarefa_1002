@@ -4,7 +4,6 @@
 // Declaração da função de display
 void initI2C();
 void display(int x, int y);
-void display_limpa();
 void borda(bool rect_estado);
 
 #endif
