@@ -23,6 +23,6 @@ int main()
     {
         leds_pwm();  // Chama a configuração dos leds pwm
         movimentoJoystick(); // Chama a configuração do movimento sincronizado com o joystick
-        sleep_ms(100);
+        sleep_ms(50);
     }
 }
