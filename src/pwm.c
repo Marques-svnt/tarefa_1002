@@ -39,10 +39,10 @@ void leds_pwm()
         // Configura o input do ADC
         adc_select_input(0);
         sleep_us(5); // Pequeno delay para estabilidade
-        uint16_t vrx_value = adc_read();
+        uint16_t vry_value = adc_read(); // Inversão para corrigir erro de joystick na placa (X e Y trocados)
         adc_select_input(1);
         sleep_us(5); // Pequeno delay para estabilidade
-        uint16_t vry_value = adc_read();
+        uint16_t vrx_value = adc_read(); // Inversão para corrigir erro de joystick na placa (X e Y trocados)
 
         // printf("VRX: %u  VRY: %u\n",vrx_value,vry_value); // Debug
 
