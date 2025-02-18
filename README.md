@@ -37,7 +37,7 @@ Este projeto utiliza a placa BitDogLab baseada no RP2040 para controlar LEDs RGB
 | LED Vermelho | GPIO 11 |
 | LED Azul | GPIO 13 |
 | LED Verde | GPIO 12 |
-| Joystick X/Y | ADC 0/1 |
+| Joystick X/Y | GPIO 26/27 |
 | Joystick PB | GPIO 22 |
 | Botão A | GPIO 5 |
 | Display SSD1306 | GPIO 14/15 |
